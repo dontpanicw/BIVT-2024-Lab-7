@@ -156,18 +156,22 @@ namespace Lab_7{
                     {
                         if (penalty >= 10){
                             status = true;
+                            break;
                         }
                     }
-                    
-                    int sumPlayersTotal = 0;
-                    foreach (var player in _hockeyPlayers) {
-                        sumPlayersTotal += player.Total;
+                    if (_hockeyPlayers.Length > 0)
+                    {
+                        int sumPlayersTotal = 0;
+                        foreach (var player in _hockeyPlayers) {
+                            sumPlayersTotal += player.Total;
+                        }
+                        int totalHockeys = sumPlayersTotal / _hockeyPlayers.Length;
+                        if (totalHockeys != 0 && (Total / (double)totalHockeys) > 0.1)
+                        {
+                            status = true;
+                        }
                     }
-                    int totalHockeys = sumPlayersTotal / _hockeyPlayers.Length;
-                    if (Total/totalHockeys > 0.1){
-                        status = true;
-                    }
-                    return status;
+                return status;
                 }
             }
         }
