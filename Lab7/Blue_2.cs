@@ -21,7 +21,7 @@ namespace Lab_7{
 
             public int Bank => _bank;
 
-            public Participant[] Participants{ get; }
+            public Participant[] Participants => _participants;
             public abstract double[] Prize {get ; }
 
             public WaterJump(string name, int bank) {
@@ -46,14 +46,14 @@ namespace Lab_7{
                 }
             }
             public class WaterJump3m : WaterJump
-        {
+            {
             public WaterJump3m(string name, int bank) : base(name, bank){ }
 
             public override double[] Prize
             {
                 get
                 {
-                    if (_participants.Length < 3 ){
+                    if (_participants == null || _participants.Length < 3 ){
                         return new double[0];
                     }
                     return new double[]
@@ -73,7 +73,7 @@ namespace Lab_7{
             public override double[] Prize{
                 get
                 {
-                    if (Participants.Length < 3 ){
+                    if (_participants == null || _participants.Length < 3 ){
                         return new double[0];
                     }
                     int countAboveMiddle = _counter / 2;
@@ -97,7 +97,8 @@ namespace Lab_7{
             } 
         }
 
-        public struct Participant {
+        public struct Participant 
+        {
             private string _name;
 
             private string _surname;
@@ -148,7 +149,7 @@ namespace Lab_7{
 
             public void Jump(int[] result)
             {
-                if (_marks == null || _marks.GetLength(0) == 0 || _marks.GetLength(1) == 0 || result == null || result.Length == 0 || _ind > 1) return;            
+                if (result == null || result.Length == 0 || _ind > 1) return;            
                 if (_ind == 0)
                 {
                     for (int i = 0; i < 5; i++)
