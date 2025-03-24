@@ -154,7 +154,8 @@ namespace Lab_7{
                     bool status = false;
                     foreach (int penalty in _penaltyTimes)
                     {
-                        if (penalty >= 10){
+                        if (penalty >= 10)
+                        {
                             status = true;
                             break;
                         }

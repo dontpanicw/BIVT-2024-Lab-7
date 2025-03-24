@@ -27,7 +27,7 @@ namespace Lab_7{
             public WaterJump(string name, int bank) {
                 this._name = name;
                 this._bank = bank;
-                this._participants = new Participant[50];
+                this._participants = new Participant[0];
                 this._counter = 0;
             }
 
