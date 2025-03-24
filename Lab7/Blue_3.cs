@@ -68,6 +68,10 @@ namespace Lab_7{
 
            public virtual void PlayMatch(int time){
             if (_penaltyTimes == null) return;
+            if (time != 0 && time != 2 && time != 5 && time != 10)
+            {
+                return;
+            }
             int[] result = new int[_penaltyTimes.Length + 1];
             Array.Copy(_penaltyTimes, result, _penaltyTimes.Length);
             _penaltyTimes = result;
@@ -177,12 +181,10 @@ namespace Lab_7{
             }
             public override void PlayMatch(int penaltyMinutes)
             {
-                if (_time == null) return;
+                if (penaltyMinutes != 0 && penaltyMinutes != 2 && penaltyMinutes != 5 && penaltyMinutes != 10) return;
+
                 base.PlayMatch(penaltyMinutes);
-                if (penaltyMinutes >= 0)
-                {
-                    _time += penaltyMinutes;
-                }
+                _time += penaltyMinutes;
 
             }
         }
