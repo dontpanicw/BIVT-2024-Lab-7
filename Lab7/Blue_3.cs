@@ -132,18 +132,18 @@ namespace Lab_7{
             {
 
                 if (_penaltyTimes == null || fouls < 0 || fouls > 5) return;
-                int[] result = new int[_penaltyTimes.Length + 1];
-                Array.Copy(_penaltyTimes, result, _penaltyTimes.Length);
-                _penaltyTimes = result;
-                _penaltyTimes[_penaltyTimes.Length - 1] = fouls;
+                base.PlayMatch(fouls);
         }
         }
         public class HockeyPlayer : Participant {
+            private int _time = 0;
+            private int _counterPlayers = 0;
             private Participant[] _hockeyPlayers;
             public Participant[] HockeyPlayers => _hockeyPlayers;
             public HockeyPlayer(string name, string surname) : base(name, surname){
                 _hockeyPlayers = new Participant[0];
                 _penaltyTimes = new int[0];
+                _counterPlayers++;
 
             }
 
@@ -175,8 +175,16 @@ namespace Lab_7{
                 return status;
                 }
             }
+            public override void PlayMatch(int penaltyMinutes)
+            {
+                if (_time == null) return;
+                base.PlayMatch(penaltyMinutes);
+                if (penaltyMinutes >= 0)
+                {
+                    _time += penaltyMinutes;
+                }
+
+            }
         }
-
-
     }
 }
