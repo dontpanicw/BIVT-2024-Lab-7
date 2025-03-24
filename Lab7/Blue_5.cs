@@ -65,6 +65,8 @@ namespace Lab_7{
                     int totalScore = 0;
                     for (int i = 0; i < _sportsmen.Length; i++)
                     {
+                        if (_sportsmen[i] == null) continue;
+
                         switch (_sportsmen[i].Place)
                         {
                             case 1: totalScore += 5; break;
@@ -82,9 +84,10 @@ namespace Lab_7{
             public int TopPlace{
                 get
                 {
-                    if (_sportsmen == null) return 0;
+                    if (Sportsmen == null || Sportsmen.Length == 0) return 0;
                     int top = 18;
                     for (int i = 0; i < _sportsmen.Length; i++){
+                        if (_sportsmen[i] == null) continue;
                         if (_sportsmen[i].Place < top && _sportsmen[i].Place != 0){
                             top = _sportsmen[i].Place;
                             }
@@ -118,7 +121,8 @@ namespace Lab_7{
                 if (teams == null || teams.Length == 0) return;
                 for (int i = 0; i < teams.Length - 1; i++){
                     for (int j = 0; j < teams.Length - i - 1; j++){
-                         if (teams[j].SummaryScore < teams[j + 1].SummaryScore)
+                        if (teams[j] == null || teams[j + 1] == null) continue;
+                        if (teams[j].SummaryScore < teams[j + 1].SummaryScore)
                         {
                             Team temp = teams[j];
                             teams[j] = teams[j + 1];
