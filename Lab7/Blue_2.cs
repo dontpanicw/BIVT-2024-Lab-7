@@ -54,9 +54,9 @@ namespace Lab_7{
                 get
                 {
                     if (_participants == null || _participants.Length < 3 ){
-                        return new double[0];
+                        return default;
                     }
-                    return new double[]
+                    return new double[3]
                     {
                     0.5 * Bank, 
                     0.3 * Bank, 
@@ -74,7 +74,7 @@ namespace Lab_7{
                 get
                 {
                     if (_participants == null || _participants.Length < 3 ){
-                        return new double[0];
+                        return default;
                     }
                     int countAboveMiddle = _counter / 2;
                     if (countAboveMiddle < 3) countAboveMiddle = 3;

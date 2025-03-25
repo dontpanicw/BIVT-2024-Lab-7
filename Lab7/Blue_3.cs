@@ -49,15 +49,13 @@ namespace Lab_7{
             get
             {
                 if (_penaltyTimes == null) return false;
-                bool status = false;
                 for (int i = 0; i < _penaltyTimes.Length; i++){
                     if (_penaltyTimes[i] >= 10){
-                        status = true;
-                        return status;
+                        return true;
                     }
 
                 }
-                return status;
+                return false;
             }
            }
            public Participant(string name, string surname){
@@ -68,10 +66,6 @@ namespace Lab_7{
 
            public virtual void PlayMatch(int time){
             if (_penaltyTimes == null) return;
-            if (time != 0 && time != 2 && time != 5 && time != 10)
-            {
-                return;
-            }
             int[] result = new int[_penaltyTimes.Length + 1];
             Array.Copy(_penaltyTimes, result, _penaltyTimes.Length);
             _penaltyTimes = result;
@@ -80,12 +74,23 @@ namespace Lab_7{
 
            public static void Sort(Participant[] array){
             if (array.Length == 0 || array == null) return;
+
             for (int i = 0; i < array.Length; i++)
                 {
                     for (int j = 0; j < array.Length - i - 1; j++)
                     {
-                        if (array[j].Total > array[j + 1].Total)
+                        if (array[j] == null)
+                        {
                             (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        }
+                        else if (array[j].Total > array[j + 1].Total) 
+                        {
+                            (array[j], array[j + 1]) = (array[j + 1], array[j]);
+                        }
+                        else if (array[j + 1] == null)
+                        {
+                            continue;
+                        }
                     }
                 }
            }
@@ -113,21 +118,19 @@ namespace Lab_7{
                 get
                 {
                     if (_penaltyTimes == null || _penaltyTimes.Length == 0) return false;
-                    bool status = false;
                     int counterMatches = 0;
-
-                    foreach (var fouls in _penaltyTimes){
-                        if (fouls == 5){
+                    for (int i = 0; i < _penaltyTimes.Length; i++)
+                    {
+                        if (_penaltyTimes[i] >= 5)
+                        {
                             counterMatches++;
                         }
                     }
-                    if (counterMatches > _penaltyTimes.Length * 0.1){
-                        status = true;
+                    if (counterMatches > 0.1 * _penaltyTimes.Length || this.Total > 2 * _penaltyTimes.Length)
+                    {
+                        return true;
                     }
-                    if (Total > _penaltyTimes.Length * 2){
-                        status = true;
-                    }
-                    return status;
+                    return false;
 
                 }
                 
@@ -135,17 +138,14 @@ namespace Lab_7{
              public override void PlayMatch(int fouls)
             {
 
-                if (_penaltyTimes == null || fouls < 0 || fouls > 5) return;
+                if (_penaltyTimes == null || fouls > 5 || fouls < 0 ) return;
                 base.PlayMatch(fouls);
         }
         }
         public class HockeyPlayer : Participant {
             private int _time = 0;
             private int _counterPlayers = 0;
-            private Participant[] _hockeyPlayers;
-            public Participant[] HockeyPlayers => _hockeyPlayers;
             public HockeyPlayer(string name, string surname) : base(name, surname){
-                _hockeyPlayers = new Participant[0];
                 _penaltyTimes = new int[0];
                 _counterPlayers++;
 
@@ -154,37 +154,29 @@ namespace Lab_7{
             public override bool IsExpelled{
                 get
                 {
-                    if (_hockeyPlayers == null) return false;
-                    bool status = false;
+                    if (_penaltyTimes == null) return false;
                     foreach (int penalty in _penaltyTimes)
                     {
                         if (penalty >= 10)
                         {
-                            status = true;
-                            break;
+                            return true;
                         }
                     }
-                    if (_hockeyPlayers.Length > 0)
+                    if (_counterPlayers == 0) return false;
+                    double avgTime = (double)_time / _counterPlayers;
+
+                    if (this.Total > avgTime * 0.1)
                     {
-                        int sumPlayersTotal = 0;
-                        foreach (var player in _hockeyPlayers) {
-                            sumPlayersTotal += player.Total;
-                        }
-                        int totalHockeys = sumPlayersTotal / _hockeyPlayers.Length;
-                        if (totalHockeys != 0 && (Total / (double)totalHockeys) > 0.1)
-                        {
-                            status = true;
-                        }
+                        return true;
                     }
-                return status;
+                return false;
                 }
             }
-            public override void PlayMatch(int penaltyMinutes)
+            public override void PlayMatch(int minutes)
             {
-                if (penaltyMinutes != 0 && penaltyMinutes != 2 && penaltyMinutes != 5 && penaltyMinutes != 10) return;
-
-                base.PlayMatch(penaltyMinutes);
-                _time += penaltyMinutes;
+                if (minutes < 0) return;
+                base.PlayMatch(minutes);
+                _time += minutes;
 
             }
         }
