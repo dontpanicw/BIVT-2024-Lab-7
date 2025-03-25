@@ -79,24 +79,8 @@ namespace Lab_7{
                     if (this.Participants == null || this.Participants.Length <= 3 ){
                         return default;
                     }
-                    // int countAboveMiddle = _counter / 2;
-                    // if (countAboveMiddle < 3) countAboveMiddle = 3;
-                    // if (countAboveMiddle > 10) countAboveMiddle = 10; 
-
-                    // double[] prizes = new double[_counter];
-                    // double n = 0.2 / countAboveMiddle; 
-
-                    // prizes[0] = 0.4 * Bank; 
-                    // prizes[1] = 0.25 * Bank; 
-                    // prizes[2] = 0.15 * Bank; 
-
-                    // for (int i = 3; i < countAboveMiddle; i++)
-                    // {
-                    //     prizes[i] = n * Bank;
-                    // }
-                    // return prizes;
-                    int counter;
                     double[] reward;
+                    int counter;
                     if (Participants.Length / 2 < 10)
                     {
                         reward = new double[Participants.Length / 2];
@@ -108,7 +92,6 @@ namespace Lab_7{
                         counter = 10;
                     }
                     double share = 20.0 / counter;
-
                     for (int i = 0; i < counter; i++)
                     {
                         reward[i] = this.Bank * (share / 100);
@@ -116,7 +99,6 @@ namespace Lab_7{
                     reward[0] += this.Bank * 0.4; 
                     reward[1] += this.Bank * 0.25;
                     reward[2] += this.Bank * 0.15; 
-
                     return reward;
                 }
                 
