@@ -30,20 +30,23 @@ namespace Lab_7{
                 this._participants = new Participant[0];
                 this._counter = 0;
             }
-
-            public void Add(Participant participant){
+            public void Add(Participant participant)
+            {
                 if (_participants == null) return;
-                if (_counter < _participants.Length){
-                    _participants[_counter] = participant;
-                    _counter++;
+                Participant[] newArrayParticipants = new Participant[_participants.Length + 1];
+                for (int i = 0; i < _participants.Length; i++)
+                {
+                    newArrayParticipants[i] = _participants[i];
                 }
+                newArrayParticipants[_participants.Length] = participant;
+                _participants = newArrayParticipants;
             }
             public void Add(Participant[] participants){
                 if (_participants == null || participants.Length == 0 || participants == null) return;
                 for (int i = 0; i < participants.Length; i++){
                     Add(participants[i]);
                 }
-                }
+            }
             }
             public class WaterJump3m : WaterJump
             {
@@ -73,25 +76,48 @@ namespace Lab_7{
             public override double[] Prize{
                 get
                 {
-                    if (_participants == null || _participants.Length < 3 ){
+                    if (this.Participants == null || this.Participants.Length <= 3 ){
                         return default;
                     }
-                    int countAboveMiddle = _counter / 2;
-                    if (countAboveMiddle < 3) countAboveMiddle = 3;
-                    if (countAboveMiddle > 10) countAboveMiddle = 10; 
+                    // int countAboveMiddle = _counter / 2;
+                    // if (countAboveMiddle < 3) countAboveMiddle = 3;
+                    // if (countAboveMiddle > 10) countAboveMiddle = 10; 
 
-                    double[] prizes = new double[_counter];
-                    double n = 0.2 / countAboveMiddle; 
+                    // double[] prizes = new double[_counter];
+                    // double n = 0.2 / countAboveMiddle; 
 
-                    prizes[0] = 0.4 * Bank; 
-                    prizes[1] = 0.25 * Bank; 
-                    prizes[2] = 0.15 * Bank; 
+                    // prizes[0] = 0.4 * Bank; 
+                    // prizes[1] = 0.25 * Bank; 
+                    // prizes[2] = 0.15 * Bank; 
 
-                    for (int i = 3; i < countAboveMiddle; i++)
+                    // for (int i = 3; i < countAboveMiddle; i++)
+                    // {
+                    //     prizes[i] = n * Bank;
+                    // }
+                    // return prizes;
+                    int counter;
+                    double[] reward;
+                    if (Participants.Length / 2 < 10)
                     {
-                        prizes[i] = n * Bank;
+                        reward = new double[Participants.Length / 2];
+                        counter = Participants.Length / 2;
                     }
-                    return prizes;
+                    else
+                    {
+                        reward = new double[10];
+                        counter = 10;
+                    }
+                    double share = 20.0 / counter;
+
+                    for (int i = 0; i < counter; i++)
+                    {
+                        reward[i] = this.Bank * (share / 100);
+                    }
+                    reward[0] += this.Bank * 0.4; 
+                    reward[1] += this.Bank * 0.25;
+                    reward[2] += this.Bank * 0.15; 
+
+                    return reward;
                 }
                 
             } 

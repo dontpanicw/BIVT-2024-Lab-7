@@ -43,7 +43,7 @@ class Program
 
         var competition5m = new Blue_2.WaterJump5m("Jump 5m", 1000);
         competition5m.Add(participants);
-        Console.WriteLine("Призы 5м соревнования: " + string.Join(", ", competition5m.Prize));
+        // Console.WriteLine("Призы 5м соревнования: " + string.Join(", ", competition5m.Prize));
 
         //TASK 3
 
