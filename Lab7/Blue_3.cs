@@ -155,9 +155,9 @@ namespace Lab_7{
                 get
                 {
                     if (_penaltyTimes == null) return false;
-                    foreach (int penalty in _penaltyTimes)
+                    for (int k = 0; k < _penaltyTimes.Length; k++)
                     {
-                        if (penalty >= 10)
+                        if (_penaltyTimes[k] >= 10)
                         {
                             return true;
                         }
